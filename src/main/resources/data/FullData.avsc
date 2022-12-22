@@ -1,0 +1,32 @@
+{
+  "type": "record",
+  "name": "FullData",
+  "namespace": "io.asouquieres.data",
+  "doc": "An incomplete data",
+  "fields": [
+    {
+      "name": "dataId",
+      "type": "string"
+    },
+    {
+      "name": "mainInfo1",
+      "type": "string"
+    },
+    {
+      "name": "mainInfo2",
+      "type": "string"
+    },
+    {
+      "name": "satelliteInfo1",
+      "type": "string"
+    },
+    {
+      "name": "satelliteInfo2",
+      "type": "string"
+    },
+    {
+      "name": "satelliteInfo3",
+      "type": "string"
+    }
+  ]
+}

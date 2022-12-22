@@ -1,0 +1,16 @@
+{
+  "type": "record",
+  "name": "SatelliteDataB",
+  "namespace": "io.asouquieres.data",
+  "doc": "Some satellite data linked to MainData",
+  "fields": [
+    {
+      "name": "dataId",
+      "type": "string"
+    },
+    {
+      "name": "satelliteInfoB",
+      "type": "string"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+boolean: true
+string: "test"
+int: 5
+parent:
+  child:
+    subchild: 42

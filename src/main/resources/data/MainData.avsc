@@ -1,0 +1,20 @@
+{
+  "type": "record",
+  "name": "MainData",
+  "namespace": "io.asouquieres.data",
+  "doc": "An incomplete data",
+  "fields": [
+    {
+      "name": "dataId",
+      "type": "string"
+    },
+    {
+      "name": "mainInfo1",
+      "type": "string"
+    },
+    {
+      "name": "mainInfo2",
+      "type": "string"
+    }
+  ]
+}
