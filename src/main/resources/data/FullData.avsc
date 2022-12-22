@@ -6,27 +6,33 @@
   "fields": [
     {
       "name": "dataId",
-      "type": "string"
+      "type": "string",
+      "default": ""
     },
     {
       "name": "mainInfo1",
-      "type": "string"
+      "type": "string",
+      "default": ""
     },
     {
       "name": "mainInfo2",
-      "type": "string"
+      "type": "string",
+      "default": ""
     },
     {
       "name": "satelliteInfo1",
-      "type": "string"
+      "type": "string",
+      "default": ""
     },
     {
       "name": "satelliteInfo2",
-      "type": "string"
+      "type": "string",
+      "default": ""
     },
     {
       "name": "satelliteInfo3",
-      "type": "string"
+      "type": "string",
+      "default": ""
     }
   ]
 }
