@@ -16,6 +16,8 @@ It will also demonstrate how to do :
 - To clone & execute "gradle publishToMavenLocal" this awesome confluent container module project for the TestContainer tool :
   https://github.com/testcontainers-all-things-kafka/cp-testcontainers
 
+  (The advertised maven repository appears not available)
+
 
 This project use some code from https://github.com/confluentinc/kafka-streams-examples/, the two files that i used mention that ownership and their attached Apache 2.0 License
 
