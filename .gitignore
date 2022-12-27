@@ -8,3 +8,5 @@ target/
 *.log
 
 *.bkp
+
+.DS_Store
