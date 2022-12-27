@@ -16,7 +16,7 @@
 
     <properties>
         <confluent.version>7.3.1</confluent.version>
-        <avro.version>1.11.0</avro.version>
+        <avro.version>1.10.0</avro.version>
         <kafka.version>3.3.1</kafka.version>
         <snakeyaml.version>1.33</snakeyaml.version>
         <log4j.version>1.2.17</log4j.version>
@@ -158,27 +158,5 @@
             <version>${kafka.version}</version>
             <scope>test</scope>
         </dependency>
-
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>testcontainers</artifactId>
-            <version>${testcontainers.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>kafka</artifactId>
-            <version>${testcontainers.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.christophschubert</groupId>
-            <artifactId>cp-testcontainers</artifactId>
-            <version>0.2.0-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-
-
-
     </dependencies>
 </project>

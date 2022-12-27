@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import static io.asouquieres.kstream.helpers.StreamExceptionCatcher.DLQ_NAME;
-import static io.asouquieres.kstream.stream.simpleavro.SimpleStreamWithAvroConstants.DLT;
+import static io.asouquieres.kstream.stream.papi.reconciliation.PapiReconciliationConstants.DLT;
 
 @SpringBootApplication
 public class PapiReconciliationLauncherApp implements CommandLineRunner {

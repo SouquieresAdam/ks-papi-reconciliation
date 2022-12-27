@@ -57,7 +57,7 @@ public class MainDataReconciliationProcessor implements Processor<String, MainDa
 
         // Update the data & save
         storedValue.setMainInfo1(record.value().getMainInfo1());
-        storedValue.setMainInfo2(record.value().getMainInfo1());
+        storedValue.setMainInfo2(record.value().getMainInfo2());
         store.put(record.key(), storedValue);
 
 

@@ -37,7 +37,7 @@ public class SatelliteDataCProcessor implements Processor<String, SatelliteDataC
         }
 
         // Update the data & save
-        storedValue.setSatelliteInfo1(record.value().getSatelliteInfoC());
+        storedValue.setSatelliteInfo3(record.value().getSatelliteInfoC());
         store.put(record.key(), storedValue);
 
 

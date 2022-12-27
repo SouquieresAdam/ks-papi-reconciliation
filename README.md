@@ -9,6 +9,12 @@ It will also demonstrate how to do :
 
 
 
+## Diagram
+
+Here is a schematic representation of the target topology :
+
+![Drag Racing](diagram.png)
+
 
 ## Prerequisites to build this code base
 

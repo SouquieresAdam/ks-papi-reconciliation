@@ -1,9 +1,6 @@
 package io.asouquieres.kstream.stream.papi.reconciliation;
 
-import io.asouquieres.data.MainData;
-import io.asouquieres.data.SatelliteDataA;
-import io.asouquieres.data.SatelliteDataB;
-import io.asouquieres.data.SatelliteDataC;
+import io.asouquieres.data.*;
 
 import io.asouquieres.kstream.helpers.AvroSerdes;
 import io.asouquieres.kstream.stream.papi.reconciliation.processors.MainDataReconciliationProcessor;
@@ -15,6 +12,7 @@ import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.Topology;
 import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.kstream.Produced;
+import org.apache.kafka.streams.kstream.Repartitioned;
 import org.apache.kafka.streams.state.Stores;
 
 import static io.asouquieres.kstream.stream.papi.reconciliation.PapiReconciliationConstants.*;
@@ -25,13 +23,22 @@ public class PapiReconciliationTopology {
 
         // Create the internal reconciliation statestore
         StreamsBuilder builder = new StreamsBuilder();
-        builder.addStateStore(Stores.keyValueStoreBuilder(Stores.persistentKeyValueStore(RECONCILIATION_STORE), Serdes.String(), AvroSerdes.<io.asouquieres.data.FullData>get()));
+        builder.addStateStore(Stores.keyValueStoreBuilder(Stores.persistentKeyValueStore(RECONCILIATION_STORE), Serdes.String(), AvroSerdes.<FullData>get()));
 
-        // Stream & rekey each input flow to ensure they have the same partitionning
-        var mainDataStream = builder.stream(MAIN_DATA_TOPIC, Consumed.with(Serdes.String(), AvroSerdes.<MainData>get()));
-        var satelliteDataAStream = builder.stream(SATELLITE_INFO_A, Consumed.with(Serdes.String(), AvroSerdes.<SatelliteDataA>get()));
-        var satelliteDataBStream = builder.stream(SATELLITE_INFO_B, Consumed.with(Serdes.String(), AvroSerdes.<SatelliteDataB>get()));
-        var satelliteDataCStream = builder.stream(SATELLITE_INFO_C, Consumed.with(Serdes.String(), AvroSerdes.<SatelliteDataC>get()));
+        // Stream & re-key each input flow to ensure they have the same partitioning
+        var mainDataStream = builder.stream(MAIN_DATA_TOPIC, Consumed.with(Serdes.String(), AvroSerdes.<MainData>get()))
+                .selectKey((k,v) -> v.getDataId())
+                .repartition(Repartitioned.with(Serdes.String(), AvroSerdes.<MainData>get()).withName(MAIN_DATA_BY_CORRELATION_KEY));
+
+        var satelliteDataAStream = builder.stream(SATELLITE_INFO_A, Consumed.with(Serdes.String(), AvroSerdes.<SatelliteDataA>get()))
+                .selectKey((k,v) -> v.getDataId())
+                .repartition(Repartitioned.with(Serdes.String(), AvroSerdes.<SatelliteDataA>get()).withName(SATELLITEDATAA_BY_CORRELATION_KEY));
+        var satelliteDataBStream = builder.stream(SATELLITE_INFO_B, Consumed.with(Serdes.String(), AvroSerdes.<SatelliteDataB>get()))
+                .selectKey((k,v) -> v.getDataId())
+                .repartition(Repartitioned.with(Serdes.String(), AvroSerdes.<SatelliteDataB>get()).withName(SATELLITEDATAB_BY_CORRELATION_KEY));
+        var satelliteDataCStream = builder.stream(SATELLITE_INFO_C, Consumed.with(Serdes.String(), AvroSerdes.<SatelliteDataC>get()))
+                .selectKey((k,v) -> v.getDataId())
+                .repartition(Repartitioned.with(Serdes.String(), AvroSerdes.<SatelliteDataC>get()).withName(SATELLITEDATAC_BY_CORRELATION_KEY));
 
         // Integrate each of the flow with their own Processor class containing "Business Rules"
         mainDataStream.process(MainDataReconciliationProcessor::new, RECONCILIATION_STORE) // Do not forget to assign the statestore to the operation
