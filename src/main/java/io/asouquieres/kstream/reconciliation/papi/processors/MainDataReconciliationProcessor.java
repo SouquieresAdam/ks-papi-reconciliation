@@ -1,4 +1,4 @@
-package io.asouquieres.kstream.stream.papi.reconciliation.processors;
+package io.asouquieres.kstream.reconciliation.papi.processors;
 
 
 import io.asouquieres.data.FullData;
@@ -11,7 +11,7 @@ import org.apache.kafka.streams.state.KeyValueStore;
 
 import java.time.Duration;
 
-import static io.asouquieres.kstream.stream.papi.reconciliation.PapiReconciliationConstants.RECONCILIATION_STORE;
+import static io.asouquieres.kstream.reconciliation.ReconciliationConstants.RECONCILIATION_STORE;
 
 
 /**

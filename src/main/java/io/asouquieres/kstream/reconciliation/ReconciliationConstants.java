@@ -1,6 +1,6 @@
-package io.asouquieres.kstream.stream.papi.reconciliation;
+package io.asouquieres.kstream.reconciliation;
 
-public class PapiReconciliationConstants {
+public class ReconciliationConstants {
 
     public static String MAIN_DATA_TOPIC = "MainData";
     public static String SATELLITE_INFO_A = "SatelliteA";

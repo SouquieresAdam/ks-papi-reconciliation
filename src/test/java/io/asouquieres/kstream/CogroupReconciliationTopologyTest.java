@@ -3,9 +3,8 @@ package io.asouquieres.kstream;
 import io.asouquieres.data.*;
 import io.asouquieres.kstream.helpers.AvroSerdes;
 import io.asouquieres.kstream.helpers.StreamContext;
-
-import io.asouquieres.kstream.reconciliation.cogroup.CogroupReconciliationTopology;
 import io.asouquieres.kstream.reconciliation.ReconciliationConstants;
+import io.asouquieres.kstream.reconciliation.cogroup.CogroupReconciliationTopology;
 import io.asouquieres.kstream.reconciliation.papi.PapiReconciliationTopology;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.StreamsConfig;
@@ -21,7 +20,7 @@ import java.util.Properties;
 import static io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class PAPIReconciliationTopologyTest {
+public class CogroupReconciliationTopologyTest {
     private TestInputTopic<String, MainData> mainInputTopic;
 
     private TestInputTopic<String, SatelliteDataA> inputATopic;
@@ -44,8 +43,7 @@ public class PAPIReconciliationTopologyTest {
         props.put(SCHEMA_REGISTRY_URL_CONFIG, "mock://dummy:1234");
         StreamContext.setProps(props);
 
-        var topology = PapiReconciliationTopology.getTopology();
-
+        var topology = CogroupReconciliationTopology.getTopology();
         System.out.println(topology.describe());
 
         testDriver = new TopologyTestDriver(topology, props);

@@ -1,8 +1,7 @@
-package io.asouquieres.kstream.stream.papi.reconciliation.processors;
+package io.asouquieres.kstream.reconciliation.papi.processors;
 
 
 import io.asouquieres.data.FullData;
-import io.asouquieres.data.MainData;
 import io.asouquieres.data.SatelliteDataA;
 import org.apache.kafka.streams.processor.api.Processor;
 import org.apache.kafka.streams.processor.api.ProcessorContext;
@@ -10,7 +9,7 @@ import org.apache.kafka.streams.processor.api.Record;
 import org.apache.kafka.streams.state.KeyValueStore;
 import org.codehaus.plexus.util.StringUtils;
 
-import static io.asouquieres.kstream.stream.papi.reconciliation.PapiReconciliationConstants.RECONCILIATION_STORE;
+import static io.asouquieres.kstream.reconciliation.ReconciliationConstants.RECONCILIATION_STORE;
 
 public class SatelliteDataAProcessor implements Processor<String, SatelliteDataA, String, FullData> {
 

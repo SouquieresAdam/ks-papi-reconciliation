@@ -1,12 +1,12 @@
-package io.asouquieres.kstream.stream.papi.reconciliation;
+package io.asouquieres.kstream.reconciliation.papi;
 
 import io.asouquieres.data.*;
 
 import io.asouquieres.kstream.helpers.AvroSerdes;
-import io.asouquieres.kstream.stream.papi.reconciliation.processors.MainDataReconciliationProcessor;
-import io.asouquieres.kstream.stream.papi.reconciliation.processors.SatelliteDataAProcessor;
-import io.asouquieres.kstream.stream.papi.reconciliation.processors.SatelliteDataBProcessor;
-import io.asouquieres.kstream.stream.papi.reconciliation.processors.SatelliteDataCProcessor;
+import io.asouquieres.kstream.reconciliation.papi.processors.MainDataReconciliationProcessor;
+import io.asouquieres.kstream.reconciliation.papi.processors.SatelliteDataAProcessor;
+import io.asouquieres.kstream.reconciliation.papi.processors.SatelliteDataBProcessor;
+import io.asouquieres.kstream.reconciliation.papi.processors.SatelliteDataCProcessor;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.Topology;
@@ -15,7 +15,7 @@ import org.apache.kafka.streams.kstream.Produced;
 import org.apache.kafka.streams.kstream.Repartitioned;
 import org.apache.kafka.streams.state.Stores;
 
-import static io.asouquieres.kstream.stream.papi.reconciliation.PapiReconciliationConstants.*;
+import static io.asouquieres.kstream.reconciliation.ReconciliationConstants.*;
 
 public class PapiReconciliationTopology {
 

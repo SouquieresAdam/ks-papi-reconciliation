@@ -1,4 +1,4 @@
-package io.asouquieres.kstream.stream.papi.reconciliation;
+package io.asouquieres.kstream.reconciliation.papi;
 
 import io.asouquieres.kstream.helpers.PropertiesLoader;
 import io.asouquieres.kstream.helpers.StreamContext;
@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import static io.asouquieres.kstream.helpers.StreamExceptionCatcher.DLQ_NAME;
-import static io.asouquieres.kstream.stream.papi.reconciliation.PapiReconciliationConstants.DLT;
+import static io.asouquieres.kstream.reconciliation.ReconciliationConstants.DLT;
 
 @SpringBootApplication
 public class PapiReconciliationLauncherApp implements CommandLineRunner {
