@@ -17,17 +17,15 @@ public class CogroupReconciliationTopology {
         // Create the internal reconciliation statestore
         StreamsBuilder builder = new StreamsBuilder();
         // Stream & re-key each input flow to ensure they have the same partitioning
-        var mainDataStream = builder.stream(MAIN_DATA_TOPIC, Consumed.with(Serdes.String(), AvroSerdes.<MainData>get()))
-                .groupBy((k,v) -> v.getDataId(), Grouped.with(MAIN_DATA_BY_CORRELATION_KEY,Serdes.String(), AvroSerdes.get()));
+        var mainDataStream = builder.stream(Topics.MAIN_DATA_TOPIC, Consumed.with(Serdes.String(), AvroSerdes.<MainData>get()))
+                .groupBy((k,v) -> v.getDataId(), Grouped.with(Repartitions.MAIN_DATA_BY_CORRELATION_KEY,Serdes.String(), AvroSerdes.get()));
 
-
-        var satelliteDataAStream = builder.stream(SATELLITE_INFO_A, Consumed.with(Serdes.String(), AvroSerdes.<SatelliteDataA>get()))
-                .groupBy((k,v) -> v.getDataId(), Grouped.with(SATELLITEDATAA_BY_CORRELATION_KEY,Serdes.String(), AvroSerdes.get()));
-        var satelliteDataBStream = builder.stream(SATELLITE_INFO_B, Consumed.with(Serdes.String(), AvroSerdes.<SatelliteDataB>get()))
-                .groupBy((k,v) -> v.getDataId(), Grouped.with(SATELLITEDATAB_BY_CORRELATION_KEY,Serdes.String(), AvroSerdes.get()));
-        var satelliteDataCStream = builder.stream(SATELLITE_INFO_C, Consumed.with(Serdes.String(), AvroSerdes.<SatelliteDataC>get()))
-                .groupBy((k,v) -> v.getDataId(), Grouped.with(SATELLITEDATAC_BY_CORRELATION_KEY,Serdes.String(), AvroSerdes.get()));
-
+        var satelliteDataAStream = builder.stream(Topics.SATELLITE_INFO_A, Consumed.with(Serdes.String(), AvroSerdes.<SatelliteDataA>get()))
+                .groupBy((k,v) -> v.getDataId(), Grouped.with(Repartitions.SATELLITEDATAA_BY_CORRELATION_KEY,Serdes.String(), AvroSerdes.get()));
+        var satelliteDataBStream = builder.stream(Topics.SATELLITE_INFO_B, Consumed.with(Serdes.String(), AvroSerdes.<SatelliteDataB>get()))
+                .groupBy((k,v) -> v.getDataId(), Grouped.with(Repartitions.SATELLITEDATAB_BY_CORRELATION_KEY,Serdes.String(), AvroSerdes.get()));
+        var satelliteDataCStream = builder.stream(Topics.SATELLITE_INFO_C, Consumed.with(Serdes.String(), AvroSerdes.<SatelliteDataC>get()))
+                .groupBy((k,v) -> v.getDataId(), Grouped.with(Repartitions.SATELLITEDATAC_BY_CORRELATION_KEY,Serdes.String(), AvroSerdes.get()));
 
         // Integrate each of the flow with their own Processor class containing "Business Rules"
        mainDataStream.<FullData>cogroup((k,i,o) -> {
@@ -52,7 +50,7 @@ public class CogroupReconciliationTopology {
                .aggregate(() -> FullData.newBuilder().build(), Materialized.with(Serdes.String(), AvroSerdes.<FullData>get()))
                .toStream()
                .filter((k,v) -> !StringUtils.isEmpty(v.getMainInfo1()))
-               .to(FULL_DATA_OUTPUT, Produced.with(Serdes.String(), AvroSerdes.get()));
+               .to(Topics.FULL_DATA_OUTPUT, Produced.with(Serdes.String(), AvroSerdes.get()));
 
         return builder.build();
     }

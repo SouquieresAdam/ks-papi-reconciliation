@@ -9,7 +9,7 @@ import org.apache.kafka.streams.processor.api.Record;
 import org.apache.kafka.streams.state.KeyValueStore;
 import org.codehaus.plexus.util.StringUtils;
 
-import static io.asouquieres.kstream.reconciliation.ReconciliationConstants.RECONCILIATION_STORE;
+import static io.asouquieres.kstream.reconciliation.ReconciliationConstants.*;
 
 public class SatelliteDataBProcessor implements Processor<String, SatelliteDataB, String, FullData> {
 
@@ -17,12 +17,12 @@ public class SatelliteDataBProcessor implements Processor<String, SatelliteDataB
     private ProcessorContext<String, FullData> context;
 
     @Override
-    public void init(org.apache.kafka.streams.processor.api.ProcessorContext<String, FullData> context) {
+    public void init(ProcessorContext<String, FullData> context) {
         Processor.super.init(context);
 
         // Context will provide metadata & advanced PAPI features for the current record for each process method invocation
         this.context = context;
-        store = context.getStateStore(RECONCILIATION_STORE);
+        store = context.getStateStore(Statestores.RECONCILIATION_STORE);
 
     }
 
@@ -49,7 +49,5 @@ public class SatelliteDataBProcessor implements Processor<String, SatelliteDataB
         var output = new Record<>(record.key(), storedValue,record.timestamp(), record.headers());
         context.forward(output); // Each forward call will send a record downstream ( after the .process in the topology)
     }
-    public void close() {
-
-    }
+    public void close() {}
 }

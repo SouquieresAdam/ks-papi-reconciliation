@@ -3,6 +3,7 @@ package io.asouquieres.kstream.reconciliation.papi.processors;
 
 import io.asouquieres.data.FullData;
 import io.asouquieres.data.MainData;
+import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.processor.PunctuationType;
 import org.apache.kafka.streams.processor.api.Processor;
 import org.apache.kafka.streams.processor.api.ProcessorContext;
@@ -11,7 +12,7 @@ import org.apache.kafka.streams.state.KeyValueStore;
 
 import java.time.Duration;
 
-import static io.asouquieres.kstream.reconciliation.ReconciliationConstants.RECONCILIATION_STORE;
+import static io.asouquieres.kstream.reconciliation.ReconciliationConstants.*;
 
 
 /**
@@ -32,16 +33,21 @@ public class MainDataReconciliationProcessor implements Processor<String, MainDa
 
         // Context will provide metadata & advanced PAPI features for the current record for each process method invocation
         this.context = context;
-        store = context.getStateStore(RECONCILIATION_STORE);
+        store = context.getStateStore(Statestores.RECONCILIATION_STORE);
 
 
         context.schedule(Duration.ofHours(1), PunctuationType.WALL_CLOCK_TIME, ts -> {
-            /**
-             * Here you have access to the statetore every 1 hour ( in this example )
-             * You can :
-             *  - Purge the statestore (older than X)
-             *  - Forward data based on whatever business rule (you usually prefer to do this based on an input business event !)
-             */
+
+            try ( var it = store.all()) {
+                final Iterable<KeyValue<String,FullData>> iterable = () -> it;
+                /**
+                 * Here you have access to the statetore every 1 hour ( in this example )
+                 * You can :
+                 *  - Purge the statestore (older than X)
+                 *  - Forward data based on whatever business rule (you usually prefer to do this based on an input business event !)
+                 */
+
+            }
         });
     }
 
@@ -63,6 +69,7 @@ public class MainDataReconciliationProcessor implements Processor<String, MainDa
 
         // Emit the data : all the time since in this context MainData is the "header data"
         var output = new Record<String,FullData>(record.key(), storedValue,record.timestamp(), record.headers());
+
         context.forward(output); // Each forward call will send a record downstream ( after the .process in the topology)
     }
 

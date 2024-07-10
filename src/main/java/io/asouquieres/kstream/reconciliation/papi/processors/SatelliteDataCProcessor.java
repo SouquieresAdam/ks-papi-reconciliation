@@ -9,7 +9,7 @@ import org.apache.kafka.streams.processor.api.Record;
 import org.apache.kafka.streams.state.KeyValueStore;
 import org.codehaus.plexus.util.StringUtils;
 
-import static io.asouquieres.kstream.reconciliation.ReconciliationConstants.RECONCILIATION_STORE;
+import static io.asouquieres.kstream.reconciliation.ReconciliationConstants.*;
 
 public class SatelliteDataCProcessor implements Processor<String, SatelliteDataC, String, FullData> {
 
@@ -22,7 +22,7 @@ public class SatelliteDataCProcessor implements Processor<String, SatelliteDataC
 
         // Context will provide metadata & advanced PAPI features for the current record for each process method invocation
         this.context = context;
-        store = context.getStateStore(RECONCILIATION_STORE);
+        store = context.getStateStore(Statestores.RECONCILIATION_STORE);
 
     }
 
@@ -51,7 +51,5 @@ public class SatelliteDataCProcessor implements Processor<String, SatelliteDataC
     }
 
     @Override
-    public void close() {
-
-    }
+    public void close() {}
 }

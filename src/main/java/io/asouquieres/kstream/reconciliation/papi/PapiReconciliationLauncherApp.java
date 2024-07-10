@@ -2,27 +2,28 @@ package io.asouquieres.kstream.reconciliation.papi;
 
 import io.asouquieres.kstream.helpers.PropertiesLoader;
 import io.asouquieres.kstream.helpers.StreamContext;
+import io.asouquieres.kstream.reconciliation.ReconciliationConstants;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.errors.StreamsUncaughtExceptionHandler;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import java.util.concurrent.CountDownLatch;
+
 import static io.asouquieres.kstream.helpers.StreamExceptionCatcher.DLQ_NAME;
-import static io.asouquieres.kstream.reconciliation.ReconciliationConstants.DLT;
 
 @SpringBootApplication
 public class PapiReconciliationLauncherApp implements CommandLineRunner {
 
-    private static final Logger logger = Logger.getLogger(PapiReconciliationLauncherApp.class);
-    private final MeterRegistry meterRegistry;
+    Logger logger = LoggerFactory.getLogger(PapiReconciliationLauncherApp.class);
     private final ConfigurableApplicationContext applicationContext;
 
     public PapiReconciliationLauncherApp(MeterRegistry meterRegistry, ConfigurableApplicationContext applicationContext) {
-        this.meterRegistry = meterRegistry;
         this.applicationContext = applicationContext;
     }
 
@@ -39,8 +40,7 @@ public class PapiReconciliationLauncherApp implements CommandLineRunner {
         StreamContext.setProps(streamsConfiguration);
         var p = StreamContext.getProps();
 
-        p.setProperty(DLQ_NAME, DLT);
-
+        p.setProperty(DLQ_NAME, ReconciliationConstants.Topics.DLT);
         // Build topology
         try (var stream = new KafkaStreams(PapiReconciliationTopology.getTopology(), streamsConfiguration)) {
 
@@ -67,7 +67,13 @@ public class PapiReconciliationLauncherApp implements CommandLineRunner {
             stream.start();
 
             // Ensure your app respond gracefully to external shutdown signal
-            Runtime.getRuntime().addShutdownHook(new Thread(stream::close));
+            final CountDownLatch latch = new CountDownLatch(1);
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                stream.close();
+                latch.countDown();
+            }));
+
+            latch.await();
         }
     }
 }

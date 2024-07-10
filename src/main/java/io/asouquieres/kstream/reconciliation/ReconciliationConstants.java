@@ -1,23 +1,26 @@
 package io.asouquieres.kstream.reconciliation;
 
-public class ReconciliationConstants {
+public interface ReconciliationConstants {
 
-    public static String MAIN_DATA_TOPIC = "MainData";
-    public static String SATELLITE_INFO_A = "SatelliteA";
-    public static String SATELLITE_INFO_B = "SatelliteB";
-    public static String SATELLITE_INFO_C = "SatelliteC";
+    interface Topics {
+        String MAIN_DATA_TOPIC = "MainData";
+        String SATELLITE_INFO_A = "SatelliteA";
+        String SATELLITE_INFO_B = "SatelliteB";
+        String SATELLITE_INFO_C = "SatelliteC";
 
-    public static String FULL_DATA_OUTPUT = "FullData_Output";
+        String FULL_DATA_OUTPUT = "FullData_Output";
 
+        String DLT = "Reconciliation_DLT";
+    }
 
-    public static String RECONCILIATION_STORE = "Reconciliation-Store";
+    interface Statestores {
+        String RECONCILIATION_STORE = "Reconciliation-Store";
+    }
 
-
-    public static String MAIN_DATA_BY_CORRELATION_KEY = "MainData_byDataId";
-    public static String SATELLITEDATAA_BY_CORRELATION_KEY ="SatelliteDataA_byDataId";
-    public static String SATELLITEDATAB_BY_CORRELATION_KEY = "SatelliteDataB_byDataId";
-    public static String SATELLITEDATAC_BY_CORRELATION_KEY = "SatelliteDataC_byDataId";
-
-
-    public static String DLT = "Reconciliation_DLT";
+    interface Repartitions {
+        String MAIN_DATA_BY_CORRELATION_KEY = "MainData_byDataId";
+        String SATELLITEDATAA_BY_CORRELATION_KEY ="SatelliteDataA_byDataId";
+        String SATELLITEDATAB_BY_CORRELATION_KEY = "SatelliteDataB_byDataId";
+        String SATELLITEDATAC_BY_CORRELATION_KEY = "SatelliteDataC_byDataId";
+    }
 }

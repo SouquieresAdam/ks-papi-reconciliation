@@ -1,20 +1,20 @@
 application:
-  id: "adam-simple-stream"
+  id: "papi-reconciliation-demo"
 security:
   protocol: SASL_SSL
 sasl:
   mechanism: PLAIN
   jaas:
-    config: org.apache.kafka.common.security.plain.PlainLoginModule   required username='XBKVT2T7MQ5J5VPO'   password='Q4Si6ASfukCXZ5ZBDVS4975TgLFz8mNFrDee70gtObaMoi3D/vX9MwSn0wp/t+EW';
+    config: org.apache.kafka.common.security.plain.PlainLoginModule   required username='user'   password='password';
 bootstrap:
   servers: "pkc-e8mp5.eu-west-1.aws.confluent.cloud:9092"
 schema:
   registry:
-    url: "https://psrc-95km5.eu-central-1.aws.confluent.cloud"
+    url: "https://any.eu-central-1.aws.confluent.cloud"
 basic:
   auth:
     user:
-      info: RLM2FGZX63Z5LJ4X:MaTNq3J3gIS58vnN44mW/NR42yPKucgpkj0qQrDh+dFzBJIETOWQEvqBf3jehsvB
+      info: apiKey:apiSecret
     credentials:
       source: USER_INFO
 dlq:

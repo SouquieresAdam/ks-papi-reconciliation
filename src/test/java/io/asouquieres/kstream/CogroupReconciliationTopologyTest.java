@@ -3,9 +3,8 @@ package io.asouquieres.kstream;
 import io.asouquieres.data.*;
 import io.asouquieres.kstream.helpers.AvroSerdes;
 import io.asouquieres.kstream.helpers.StreamContext;
-import io.asouquieres.kstream.reconciliation.ReconciliationConstants;
+import io.asouquieres.kstream.reconciliation.ReconciliationConstants.*;
 import io.asouquieres.kstream.reconciliation.cogroup.CogroupReconciliationTopology;
-import io.asouquieres.kstream.reconciliation.papi.PapiReconciliationTopology;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.TestInputTopic;
@@ -47,14 +46,14 @@ public class CogroupReconciliationTopologyTest {
         System.out.println(topology.describe());
 
         testDriver = new TopologyTestDriver(topology, props);
-        mainInputTopic = testDriver.createInputTopic(ReconciliationConstants.MAIN_DATA_TOPIC, Serdes.String().serializer(), AvroSerdes.<MainData>get().serializer());
+        mainInputTopic = testDriver.createInputTopic(Topics.MAIN_DATA_TOPIC, Serdes.String().serializer(), AvroSerdes.<MainData>get().serializer());
 
-        inputATopic = testDriver.createInputTopic(ReconciliationConstants.SATELLITE_INFO_A, Serdes.String().serializer(), AvroSerdes.<SatelliteDataA>get().serializer());
-        inputBTopic = testDriver.createInputTopic(ReconciliationConstants.SATELLITE_INFO_B, Serdes.String().serializer(), AvroSerdes.<SatelliteDataB>get().serializer());
-        inputCTopic = testDriver.createInputTopic(ReconciliationConstants.SATELLITE_INFO_C, Serdes.String().serializer(), AvroSerdes.<SatelliteDataC>get().serializer());
+        inputATopic = testDriver.createInputTopic(Topics.SATELLITE_INFO_A, Serdes.String().serializer(), AvroSerdes.<SatelliteDataA>get().serializer());
+        inputBTopic = testDriver.createInputTopic(Topics.SATELLITE_INFO_B, Serdes.String().serializer(), AvroSerdes.<SatelliteDataB>get().serializer());
+        inputCTopic = testDriver.createInputTopic(Topics.SATELLITE_INFO_C, Serdes.String().serializer(), AvroSerdes.<SatelliteDataC>get().serializer());
 
-        outputTopic = testDriver.createOutputTopic(ReconciliationConstants.FULL_DATA_OUTPUT, Serdes.String().deserializer(), AvroSerdes.<FullData>get().deserializer());
-        dlqTopic = testDriver.createOutputTopic(ReconciliationConstants.DLT, Serdes.String().deserializer(), Serdes.String().deserializer());
+        outputTopic = testDriver.createOutputTopic(Topics.FULL_DATA_OUTPUT, Serdes.String().deserializer(), AvroSerdes.<FullData>get().deserializer());
+        dlqTopic = testDriver.createOutputTopic(Topics.DLT, Serdes.String().deserializer(), Serdes.String().deserializer());
 
     }
 

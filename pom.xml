@@ -15,9 +15,9 @@
     </parent>
 
     <properties>
-        <confluent.version>7.3.1</confluent.version>
+        <confluent.version>7.6.1</confluent.version>
         <avro.version>1.10.0</avro.version>
-        <kafka.version>3.3.1</kafka.version>
+        <kafka.version>3.6.1</kafka.version>
         <snakeyaml.version>1.33</snakeyaml.version>
         <log4j.version>1.2.17</log4j.version>
         <slf4j.version>2.0.5</slf4j.version>
@@ -117,28 +117,13 @@
         </dependency>
         <dependency>
             <groupId>io.confluent</groupId>
-            <artifactId>kafka-avro-serializer</artifactId>
-            <version>${confluent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.confluent</groupId>
             <artifactId>kafka-schema-registry-client</artifactId>
             <version>${confluent.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka-clients</artifactId>
-            <version>${kafka.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-streams</artifactId>
             <version>${kafka.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.avro</groupId>
-            <artifactId>avro</artifactId>
-            <version>${avro.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.avro</groupId>
@@ -148,6 +133,12 @@
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
         </dependency>
 
 
